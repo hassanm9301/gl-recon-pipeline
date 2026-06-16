@@ -1,0 +1,82 @@
+journal_entry_id,entry_date,period,account_code,account_name,entity_id,debit_amount_usd,credit_amount_usd,description,entry_type,segment
+JE-2023-Q1-001,2023-03-31,2023-Q1,4000,OFSE Revenue - Well Construction,BKR-OFSE-NA,0,894500000,Q1 Well Construction Revenue Recognition,Revenue,OFSE
+JE-2023-Q1-002,2023-03-31,2023-Q1,4010,OFSE Revenue - Completions and Intervention,BKR-OFSE-NA,0,715600000,Q1 Completions and Intervention Revenue,Revenue,OFSE
+JE-2023-Q1-003,2023-03-31,2023-Q1,4020,OFSE Revenue - Production Solutions,BKR-OFSE-INTL,0,536275000,Q1 Production Solutions Revenue,Revenue,OFSE
+JE-2023-Q1-004,2023-03-31,2023-Q1,4030,OFSE Revenue - Subsea and Surface,BKR-OFSE-SUBSEA,0,431125000,Q1 Subsea and Surface Revenue,Revenue,OFSE
+JE-2023-Q1-005,2023-03-31,2023-Q1,4100,IET Revenue - Gas Technology Equipment,BKR-IET-GTE,0,534500000,Q1 Gas Technology Equipment Revenue,Revenue,IET
+JE-2023-Q1-006,2023-03-31,2023-Q1,4110,IET Revenue - Gas Technology Services,BKR-IET-GTS,0,427600000,Q1 Gas Technology Services Revenue,Revenue,IET
+JE-2023-Q1-007,2023-03-31,2023-Q1,4120,IET Revenue - Industrial Products,BKR-IET-IP,0,374325000,Q1 Industrial Products Revenue,Revenue,IET
+JE-2023-Q1-008,2023-03-31,2023-Q1,4130,IET Revenue - Industrial Solutions,BKR-IET-IP,0,481575000,Q1 Industrial Solutions Revenue,Revenue,IET
+JE-2023-Q1-009,2023-03-31,2023-Q1,4140,IET Revenue - Climate Technology Solutions,BKR-IET-CTS,0,320000000,Q1 Climate Technology Solutions Revenue,Revenue,IET
+JE-2023-Q1-010,2023-03-31,2023-Q1,5000,OFSE Cost of Goods Sold,BKR-OFSE-NA,2204625000,0,Q1 OFSE COGS,COGS,OFSE
+JE-2023-Q1-011,2023-03-31,2023-Q1,5100,IET Cost of Goods Sold,BKR-IET-GTE,1398500000,0,Q1 IET COGS,COGS,IET
+JE-2023-Q1-012,2023-03-31,2023-Q1,6000,OFSE Research and Development,BKR-OFSE-NA,123250000,0,Q1 OFSE R&D Expense,Expense,OFSE
+JE-2023-Q1-013,2023-03-31,2023-Q1,6010,IET Research and Development,BKR-IET-GTE,41250000,0,Q1 IET R&D Expense,Expense,IET
+JE-2023-Q1-014,2023-03-31,2023-Q1,6100,Selling General and Administrative - OFSE,BKR-OFSE-NA,268750000,0,Q1 OFSE SGA Expense,Expense,OFSE
+JE-2023-Q1-015,2023-03-31,2023-Q1,6110,Selling General and Administrative - IET,BKR-IET-GTE,155750000,0,Q1 IET SGA Expense,Expense,IET
+JE-2023-Q1-016,2023-03-31,2023-Q1,6200,Corporate SGA Expense,BKR-CORP,95000000,0,Q1 Corporate Overhead,Expense,Corporate
+JE-2023-Q1-017,2023-03-31,2023-Q1,6400,Depreciation and Amortization - OFSE,BKR-OFSE-NA,208000000,0,Q1 OFSE D&A,Expense,OFSE
+JE-2023-Q1-018,2023-03-31,2023-Q1,6410,Depreciation and Amortization - IET,BKR-IET-GTE,56000000,0,Q1 IET D&A,Expense,IET
+JE-2023-Q1-019,2023-03-31,2023-Q1,7000,Interest Expense,BKR-CORP,64000000,0,Q1 Net Interest Expense,Non-Operating,Corporate
+JE-2023-Q1-020,2023-03-31,2023-Q1,8000,Income Tax Expense,BKR-CORP,190000000,0,Q1 Income Tax Provision,Tax,Corporate
+JE-2023-Q2-001,2023-06-30,2023-Q2,4000,OFSE Revenue - Well Construction,BKR-OFSE-NA,0,938000000,Q2 Well Construction Revenue Recognition,Revenue,OFSE
+JE-2023-Q2-002,2023-06-30,2023-Q2,4010,OFSE Revenue - Completions and Intervention,BKR-OFSE-NA,0,750400000,Q2 Completions and Intervention Revenue,Revenue,OFSE
+JE-2023-Q2-003,2023-06-30,2023-Q2,4020,OFSE Revenue - Production Solutions,BKR-OFSE-INTL,0,562800000,Q2 Production Solutions Revenue,Revenue,OFSE
+JE-2023-Q2-004,2023-06-30,2023-Q2,4030,OFSE Revenue - Subsea and Surface,BKR-OFSE-SUBSEA,0,452800000,Q2 Subsea and Surface Revenue,Revenue,OFSE
+JE-2023-Q2-005,2023-06-30,2023-Q2,4100,IET Revenue - Gas Technology Equipment,BKR-IET-GTE,0,561000000,Q2 Gas Technology Equipment Revenue,Revenue,IET
+JE-2023-Q2-006,2023-06-30,2023-Q2,4110,IET Revenue - Gas Technology Services,BKR-IET-GTS,0,448800000,Q2 Gas Technology Services Revenue,Revenue,IET
+JE-2023-Q2-007,2023-06-30,2023-Q2,4120,IET Revenue - Industrial Products,BKR-IET-IP,0,392850000,Q2 Industrial Products Revenue,Revenue,IET
+JE-2023-Q2-008,2023-06-30,2023-Q2,4130,IET Revenue - Industrial Solutions,BKR-IET-IP,0,505350000,Q2 Industrial Solutions Revenue,Revenue,IET
+JE-2023-Q2-009,2023-06-30,2023-Q2,4140,IET Revenue - Climate Technology Solutions,BKR-IET-CTS,0,336000000,Q2 Climate Technology Solutions Revenue,Revenue,IET
+JE-2023-Q2-010,2023-06-30,2023-Q2,5000,OFSE Cost of Goods Sold,BKR-OFSE-NA,2313000000,0,Q2 OFSE COGS,COGS,OFSE
+JE-2023-Q2-011,2023-06-30,2023-Q2,5100,IET Cost of Goods Sold,BKR-IET-GTE,1467000000,0,Q2 IET COGS,COGS,IET
+JE-2023-Q2-012,2023-06-30,2023-Q2,6000,OFSE Research and Development,BKR-OFSE-NA,129375000,0,Q2 OFSE R&D Expense,Expense,OFSE
+JE-2023-Q2-013,2023-06-30,2023-Q2,6010,IET Research and Development,BKR-IET-GTE,43250000,0,Q2 IET R&D Expense,Expense,IET
+JE-2023-Q2-014,2023-06-30,2023-Q2,6100,Selling General and Administrative - OFSE,BKR-OFSE-NA,281875000,0,Q2 OFSE SGA Expense,Expense,OFSE
+JE-2023-Q2-015,2023-06-30,2023-Q2,6110,Selling General and Administrative - IET,BKR-IET-GTE,163375000,0,Q2 IET SGA Expense,Expense,IET
+JE-2023-Q2-016,2023-06-30,2023-Q2,6200,Corporate SGA Expense,BKR-CORP,99750000,0,Q2 Corporate Overhead,Expense,Corporate
+JE-2023-Q2-017,2023-06-30,2023-Q2,6400,Depreciation and Amortization - OFSE,BKR-OFSE-NA,209000000,0,Q2 OFSE D&A,Expense,OFSE
+JE-2023-Q2-018,2023-06-30,2023-Q2,6410,Depreciation and Amortization - IET,BKR-IET-GTE,57000000,0,Q2 IET D&A,Expense,IET
+JE-2023-Q2-019,2023-06-30,2023-Q2,7000,Interest Expense,BKR-CORP,54000000,0,Q2 Net Interest Expense,Non-Operating,Corporate
+JE-2023-Q2-020,2023-06-30,2023-Q2,8000,Income Tax Expense,BKR-CORP,130000000,0,Q2 Income Tax Provision,Tax,Corporate
+JE-2023-Q3-001,2023-09-30,2023-Q3,4000,OFSE Revenue - Well Construction,BKR-OFSE-NA,0,980500000,Q3 Well Construction Revenue Recognition,Revenue,OFSE
+JE-2023-Q3-002,2023-09-30,2023-Q3,4010,OFSE Revenue - Completions and Intervention,BKR-OFSE-NA,0,784400000,Q3 Completions and Intervention Revenue,Revenue,OFSE
+JE-2023-Q3-003,2023-09-30,2023-Q3,4020,OFSE Revenue - Production Solutions,BKR-OFSE-INTL,0,588300000,Q3 Production Solutions Revenue,Revenue,OFSE
+JE-2023-Q3-004,2023-09-30,2023-Q3,4030,OFSE Revenue - Subsea and Surface,BKR-OFSE-SUBSEA,0,473300000,Q3 Subsea and Surface Revenue,Revenue,OFSE
+JE-2023-Q3-005,2023-09-30,2023-Q3,4100,IET Revenue - Gas Technology Equipment,BKR-IET-GTE,0,603000000,Q3 Gas Technology Equipment Revenue,Revenue,IET
+JE-2023-Q3-006,2023-09-30,2023-Q3,4110,IET Revenue - Gas Technology Services,BKR-IET-GTS,0,482400000,Q3 Gas Technology Services Revenue,Revenue,IET
+JE-2023-Q3-007,2023-09-30,2023-Q3,4120,IET Revenue - Industrial Products,BKR-IET-IP,0,422325000,Q3 Industrial Products Revenue,Revenue,IET
+JE-2023-Q3-008,2023-09-30,2023-Q3,4130,IET Revenue - Industrial Solutions,BKR-IET-IP,0,543075000,Q3 Industrial Solutions Revenue,Revenue,IET
+JE-2023-Q3-009,2023-09-30,2023-Q3,4140,IET Revenue - Climate Technology Solutions,BKR-IET-CTS,0,361200000,Q3 Climate Technology Solutions Revenue,Revenue,IET
+JE-2023-Q3-010,2023-09-30,2023-Q3,5000,OFSE Cost of Goods Sold,BKR-OFSE-NA,2417000000,0,Q3 OFSE COGS,COGS,OFSE
+JE-2023-Q3-011,2023-09-30,2023-Q3,5100,IET Cost of Goods Sold,BKR-IET-GTE,1577000000,0,Q3 IET COGS,COGS,IET
+JE-2023-Q3-012,2023-09-30,2023-Q3,6000,OFSE Research and Development,BKR-OFSE-NA,135250000,0,Q3 OFSE R&D Expense,Expense,OFSE
+JE-2023-Q3-013,2023-09-30,2023-Q3,6010,IET Research and Development,BKR-IET-GTE,45250000,0,Q3 IET R&D Expense,Expense,IET
+JE-2023-Q3-014,2023-09-30,2023-Q3,6100,Selling General and Administrative - OFSE,BKR-OFSE-NA,294625000,0,Q3 OFSE SGA Expense,Expense,OFSE
+JE-2023-Q3-015,2023-09-30,2023-Q3,6110,Selling General and Administrative - IET,BKR-IET-GTE,170875000,0,Q3 IET SGA Expense,Expense,IET
+JE-2023-Q3-016,2023-09-30,2023-Q3,6200,Corporate SGA Expense,BKR-CORP,104250000,0,Q3 Corporate Overhead,Expense,Corporate
+JE-2023-Q3-017,2023-09-30,2023-Q3,6400,Depreciation and Amortization - OFSE,BKR-OFSE-NA,208000000,0,Q3 OFSE D&A,Expense,OFSE
+JE-2023-Q3-018,2023-09-30,2023-Q3,6410,Depreciation and Amortization - IET,BKR-IET-GTE,56000000,0,Q3 IET D&A,Expense,IET
+JE-2023-Q3-019,2023-09-30,2023-Q3,7000,Interest Expense,BKR-CORP,49000000,0,Q3 Net Interest Expense,Non-Operating,Corporate
+JE-2023-Q3-020,2023-09-30,2023-Q3,8000,Income Tax Expense,BKR-CORP,112000000,0,Q3 Income Tax Provision,Tax,Corporate
+JE-2023-Q4-001,2023-12-31,2023-Q4,4000,OFSE Revenue - Well Construction,BKR-OFSE-NA,0,1027000000,Q4 Well Construction Revenue Recognition,Revenue,OFSE
+JE-2023-Q4-002,2023-12-31,2023-Q4,4010,OFSE Revenue - Completions and Intervention,BKR-OFSE-NA,0,821600000,Q4 Completions and Intervention Revenue,Revenue,OFSE
+JE-2023-Q4-003,2023-12-31,2023-Q4,4020,OFSE Revenue - Production Solutions,BKR-OFSE-INTL,0,615800000,Q4 Production Solutions Revenue,Revenue,OFSE
+JE-2023-Q4-004,2023-12-31,2023-Q4,4030,OFSE Revenue - Subsea and Surface,BKR-OFSE-SUBSEA,0,495800000,Q4 Subsea and Surface Revenue,Revenue,OFSE
+JE-2023-Q4-005,2023-12-31,2023-Q4,4100,IET Revenue - Gas Technology Equipment,BKR-IET-GTE,0,651500000,Q4 Gas Technology Equipment Revenue,Revenue,IET
+JE-2023-Q4-006,2023-12-31,2023-Q4,4110,IET Revenue - Gas Technology Services,BKR-IET-GTS,0,521200000,Q4 Gas Technology Services Revenue,Revenue,IET
+JE-2023-Q4-007,2023-12-31,2023-Q4,4120,IET Revenue - Industrial Products,BKR-IET-IP,0,456000000,Q4 Industrial Products Revenue,Revenue,IET
+JE-2023-Q4-008,2023-12-31,2023-Q4,4130,IET Revenue - Industrial Solutions,BKR-IET-IP,0,586500000,Q4 Industrial Solutions Revenue,Revenue,IET
+JE-2023-Q4-009,2023-12-31,2023-Q4,4140,IET Revenue - Climate Technology Solutions,BKR-IET-CTS,0,389800000,Q4 Climate Technology Solutions Revenue,Revenue,IET
+JE-2023-Q4-010,2023-12-31,2023-Q4,5000,OFSE Cost of Goods Sold,BKR-OFSE-NA,2527000000,0,Q4 OFSE COGS,COGS,OFSE
+JE-2023-Q4-011,2023-12-31,2023-Q4,5100,IET Cost of Goods Sold,BKR-IET-GTE,1657500000,0,Q4 IET COGS,COGS,IET
+JE-2023-Q4-012,2023-12-31,2023-Q4,6000,OFSE Research and Development,BKR-OFSE-NA,141125000,0,Q4 OFSE R&D Expense,Expense,OFSE
+JE-2023-Q4-013,2023-12-31,2023-Q4,6010,IET Research and Development,BKR-IET-GTE,47250000,0,Q4 IET R&D Expense,Expense,IET
+JE-2023-Q4-014,2023-12-31,2023-Q4,6100,Selling General and Administrative - OFSE,BKR-OFSE-NA,305750000,0,Q4 OFSE SGA Expense,Expense,OFSE
+JE-2023-Q4-015,2023-12-31,2023-Q4,6110,Selling General and Administrative - IET,BKR-IET-GTE,180000000,0,Q4 IET SGA Expense,Expense,IET
+JE-2023-Q4-016,2023-12-31,2023-Q4,6200,Corporate SGA Expense,BKR-CORP,108250000,0,Q4 Corporate Overhead,Expense,Corporate
+JE-2023-Q4-017,2023-12-31,2023-Q4,6300,Restructuring and Impairment,BKR-CORP,323000000,0,FY2023 Restructuring and Impairment Charge,Expense,Corporate
+JE-2023-Q4-018,2023-12-31,2023-Q4,6400,Depreciation and Amortization - OFSE,BKR-OFSE-NA,207000000,0,Q4 OFSE D&A,Expense,OFSE
+JE-2023-Q4-019,2023-12-31,2023-Q4,6410,Depreciation and Amortization - IET,BKR-IET-GTE,55000000,0,Q4 IET D&A,Expense,IET
+JE-2023-Q4-020,2023-12-31,2023-Q4,7000,Interest Expense,BKR-CORP,49000000,0,Q4 Net Interest Expense,Non-Operating,Corporate
+JE-2023-Q4-021,2023-12-31,2023-Q4,8000,Income Tax Expense,BKR-CORP,77000000,0,Q4 Income Tax Provision,Tax,Corporate

@@ -1,0 +1,37 @@
+account_code,account_name,account_type,category,segment
+1000,Cash and Cash Equivalents,Asset,Current Asset,Corporate
+1100,Accounts Receivable,Asset,Current Asset,Corporate
+1200,Inventories,Asset,Current Asset,Corporate
+1300,Prepaid Expenses,Asset,Current Asset,Corporate
+1500,Property Plant and Equipment,Asset,Non-Current Asset,Corporate
+1600,Goodwill,Asset,Non-Current Asset,Corporate
+1700,Intangible Assets,Asset,Non-Current Asset,Corporate
+2000,Accounts Payable,Liability,Current Liability,Corporate
+2100,Accrued Expenses,Liability,Current Liability,Corporate
+2200,Short-Term Debt,Liability,Current Liability,Corporate
+2500,Long-Term Debt,Liability,Non-Current Liability,Corporate
+2600,Deferred Tax Liability,Liability,Non-Current Liability,Corporate
+3000,Common Stock,Equity,Equity,Corporate
+3100,Retained Earnings,Equity,Equity,Corporate
+4000,OFSE Revenue - Well Construction,Revenue,Revenue,OFSE
+4010,OFSE Revenue - Completions and Intervention,Revenue,Revenue,OFSE
+4020,OFSE Revenue - Production Solutions,Revenue,Revenue,OFSE
+4030,OFSE Revenue - Subsea and Surface,Revenue,Revenue,OFSE
+4100,IET Revenue - Gas Technology Equipment,Revenue,Revenue,IET
+4110,IET Revenue - Gas Technology Services,Revenue,Revenue,IET
+4120,IET Revenue - Industrial Products,Revenue,Revenue,IET
+4130,IET Revenue - Industrial Solutions,Revenue,Revenue,IET
+4140,IET Revenue - Climate Technology Solutions,Revenue,Revenue,IET
+5000,OFSE Cost of Goods Sold,Expense,COGS,OFSE
+5100,IET Cost of Goods Sold,Expense,COGS,IET
+6000,OFSE Research and Development,Expense,Operating Expense,OFSE
+6010,IET Research and Development,Expense,Operating Expense,IET
+6100,Selling General and Administrative - OFSE,Expense,Operating Expense,OFSE
+6110,Selling General and Administrative - IET,Expense,Operating Expense,IET
+6200,Corporate SGA Expense,Expense,Operating Expense,Corporate
+6300,Restructuring and Impairment,Expense,Operating Expense,Corporate
+6400,Depreciation and Amortization - OFSE,Expense,Operating Expense,OFSE
+6410,Depreciation and Amortization - IET,Expense,Operating Expense,IET
+7000,Interest Expense,Expense,Non-Operating,Corporate
+7100,Other Non-Operating Income,Revenue,Non-Operating,Corporate
+8000,Income Tax Expense,Expense,Tax,Corporate

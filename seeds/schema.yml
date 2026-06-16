@@ -1,0 +1,8 @@
+version: 2
+
+seeds:
+  - name: gl_entries
+    config:
+      column_types:
+        debit_amount_usd: bigint
+        credit_amount_usd: bigint

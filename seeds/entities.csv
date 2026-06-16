@@ -1,0 +1,9 @@
+entity_id,entity_name,entity_type,segment,region,country
+BKR-CORP,Baker Hughes Company,Parent,Corporate,Global,USA
+BKR-OFSE-NA,BKR Oilfield Services NA,Operating,OFSE,North America,USA
+BKR-OFSE-INTL,BKR Oilfield Services International,Operating,OFSE,International,Multiple
+BKR-OFSE-SUBSEA,BKR Subsea and Surface Systems,Operating,OFSE,Global,Multiple
+BKR-IET-GTE,BKR Gas Technology Equipment,Operating,IET,Global,Multiple
+BKR-IET-GTS,BKR Gas Technology Services,Operating,IET,Global,Multiple
+BKR-IET-IP,BKR Industrial Products,Operating,IET,Global,Multiple
+BKR-IET-CTS,BKR Climate Technology Solutions,Operating,IET,Global,Multiple
