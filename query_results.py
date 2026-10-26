@@ -1,6 +1,6 @@
 import duckdb
 
-con = duckdb.connect(r'C:\Users\hassa\gl_recon_pipeline\gl_recon\gl_recon.duckdb')
+con = duckdb.connect('gl_recon.duckdb')
 
 print("\n=== GL Reconciliation - Segment Summary ===")
 print(con.execute("""

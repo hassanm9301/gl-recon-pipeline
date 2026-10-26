@@ -1,298 +1,165 @@
-\# GL Reconciliation Pipeline — Baker Hughes (BKR)
+# GL Reconciliation Pipeline — Baker Hughes (BKR)
 
+![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat&logo=dbt&logoColor=white)
+![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?style=flat&logo=snowflake&logoColor=white)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
 
+## Overview
 
-!\[dbt](https://img.shields.io/badge/dbt-FF694B?style=flat\&logo=dbt\&logoColor=white)
+An end-to-end GL reconciliation pipeline built with dbt Core. The same project runs on two
+targets: **DuckDB** locally and **Snowflake** in the cloud. It is modeled on Baker Hughes
+Company's FY2023 Annual Report (Form 10-K, SEC EDGAR).
 
-!\[DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat\&logo=duckdb\&logoColor=black)
+The pipeline automates what GL accountants do by hand: reconciling debits and credits across
+business segments, validating data quality, and producing audit-ready output.
 
-!\[Python](https://img.shields.io/badge/Python-3776AB?style=flat\&logo=python\&logoColor=white)
+---
 
-!\[SQL](https://img.shields.io/badge/SQL-4479A1?style=flat\&logo=mysql\&logoColor=white)
+## Business Context
 
-
-
-\## Overview
-
-An end-to-end GL reconciliation pipeline built using dbt Core and DuckDB, 
-
-powered by real financial data from Baker Hughes Company's 2023 Annual Report (10-K filed with SEC EDGAR).
-
-
-
-This project automates what GL accountants do manually — reconciling debits and credits 
-
-across business segments, validating data quality, and producing audit-ready output.
-
-
-
-\---
-
-
-
-\## Business Context
-
-Baker Hughes (NASDAQ: BKR) is a Houston-based energy technology company with 
-
-two operating segments:
-
-
+Baker Hughes (NASDAQ: BKR) is a Houston-based energy technology company with two operating
+segments:
 
 | Segment | Full Name | FY2023 Revenue |
-
 |---|---|---|
+| OFSE | Oilfield Services & Equipment | $15.4B |
+| IET | Industrial & Energy Technology | $10.1B |
+| **Total** | | **$25.5B** |
 
-| OFSE | Oilfield Services \& Equipment | $15.4B |
+---
 
-| IET | Industrial \& Energy Technology | $10.1B |
-
-| \*\*Total\*\* | | \*\*$25.5B\*\* |
-
-
-
-\---
-
-
-
-\## Pipeline Architecture
-
-
+## Pipeline Architecture
 
 ```
-
-┌─────────────────────────────────────────────────────┐
-
-│                   RAW DATA LAYER                    │
-
-│  gl\_entries.csv  │  chart\_of\_accounts.csv  │  entities.csv  │
-
-│  (81 rows)       │  (36 rows)              │  (8 rows)      │
-
-└────────────────────────┬────────────────────────────┘
-
-&#x20;                        │ dbt seed
-
-&#x20;                        ▼
-
-┌─────────────────────────────────────────────────────┐
-
-│                    DUCKDB                           │
-
-│              gl\_recon.duckdb                        │
-
-└────────────────────────┬────────────────────────────┘
-
-&#x20;                        │ dbt run
-
-&#x20;                        ▼
-
-┌─────────────────────────────────────────────────────┐
-
-│                 STAGING LAYER (Views)               │
-
-│   stg\_gl\_entries      │   stg\_chart\_of\_accounts     │
-
-│   - Clean dates       │   - Account reference       │
-
-│   - Add fiscal\_year   │   - Account types           │
-
-│   - Add fiscal\_qtr    │                             │
-
-└────────────────────────┬────────────────────────────┘
-
-&#x20;                        │ JOIN + GROUP BY
-
-&#x20;                        ▼
-
-┌─────────────────────────────────────────────────────┐
-
-│                  MARTS LAYER (Table)                │
-
-│             mart\_gl\_reconciliation                  │
-
-│   - Segment breakdown (OFSE vs IET)                 │
-
-│   - Quarterly P\&L summary                          │
-
-│   - Debit/Credit balance check                      │
-
-│   - Automated data quality tests (8/8 PASS)         │
-
-└─────────────────────────────────────────────────────┘
-
+┌──────────────────────────────────────────────────────────────┐
+│                        RAW DATA (seeds)                      │
+│  gl_entries.csv   │  chart_of_accounts.csv  │  entities.csv  │
+│  (81 rows)        │  (36 rows)              │  (8 rows)      │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ dbt seed
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│           WAREHOUSE: DuckDB (local) or Snowflake             │
+│     gl_recon.duckdb      │      GL_RECON.DEV (Snowflake)     │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ dbt run
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│                    STAGING LAYER (views)                     │
+│   stg_gl_entries               │   stg_chart_of_accounts     │
+│   - Clean and type dates       │   - Account reference       │
+│   - Add fiscal_year / quarter  │   - Account types           │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ join + group by
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│                     MARTS LAYER (table)                      │
+│                   mart_gl_reconciliation                     │
+│   - Segment breakdown (OFSE vs IET)                          │
+│   - Quarterly P&L summary                                    │
+│   - Debit/credit balance check                               │
+│   - Automated data quality tests (8/8 PASS)                  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
+---
 
-
-\---
-
-
-
-\## Tech Stack
-
-
+## Tech Stack
 
 | Tool | Purpose |
-
 |---|---|
-
-| dbt Core | Data transformation and modeling |
-
-| DuckDB | Local analytical database |
-
+| dbt Core | Data transformation, modeling, and testing |
+| Snowflake | Cloud data warehouse target |
+| DuckDB | Local analytical database target |
 | Python | Querying and result output |
-
 | SQL | Business logic and transformations |
-
 | Git + GitHub | Version control |
 
+---
 
-
-\---
-
-
-
-\## Models
-
-
+## Models
 
 | Model | Layer | Type | Description |
-
 |---|---|---|---|
+| `stg_gl_entries` | Staging | View | Cleaned and typed GL journal entries |
+| `stg_chart_of_accounts` | Staging | View | Account reference data |
+| `mart_gl_reconciliation` | Marts | Table | Final reconciliation by segment and period |
 
-| `stg\_gl\_entries` | Staging | View | Cleaned and typed GL journal entries |
+---
 
-| `stg\_chart\_of\_accounts` | Staging | View | Account reference data |
-
-| `mart\_gl\_reconciliation` | Marts | Table | Final reconciliation by segment and period |
-
-
-
-\---
-
-
-
-\## Data Tests
-
-
+## Data Tests
 
 | Test | Column | Result |
-
 |---|---|---|
+| unique | journal_entry_id | ✅ PASS |
+| not_null | journal_entry_id | ✅ PASS |
+| not_null | entry_date | ✅ PASS |
+| not_null | account_code | ✅ PASS |
+| not_null | segment | ✅ PASS |
+| accepted_values | segment | ✅ PASS |
+| unique | account_code (COA) | ✅ PASS |
+| not_null | account_code (COA) | ✅ PASS |
 
-| unique | journal\_entry\_id | ✅ PASS |
+**8/8 tests passing on both DuckDB and Snowflake.**
 
-| not\_null | journal\_entry\_id | ✅ PASS |
+---
 
-| not\_null | entry\_date | ✅ PASS |
+## Key Metrics (FY2023)
 
-| not\_null | account\_code | ✅ PASS |
+- Total Revenue: **$25.5B**
+- OFSE Revenue: **$15.4B**
+- IET Revenue: **$10.1B**
+- Restructuring Charge: **$323M**
+- GL Entries Processed: **81**
+- Data Quality Tests: **8/8 PASS**
 
-| not\_null | segment | ✅ PASS |
+---
 
-| accepted\_values | segment | ✅ PASS |
+## How to Run
 
-| unique | account\_code (COA) | ✅ PASS |
-
-| not\_null | account\_code (COA) | ✅ PASS |
-
-
-
-\*\*8/8 tests passing\*\*
-
-
-
-\---
-
-
-
-\## Key Metrics (FY2023)
-
-
-
-\- Total Revenue: \*\*$25.5B\*\*
-
-\- OFSE Revenue: \*\*$15.4B\*\*
-
-\- IET Revenue: \*\*$10.1B\*\*
-
-\- Restructuring Charge: \*\*$323M\*\*
-
-\- Total GL Entries Processed: \*\*81\*\*
-
-\- Data Quality Tests: \*\*8/8 PASS\*\*
-
-
-
-\---
-
-
-
-\## How to Run
-
-
+### Locally on DuckDB (default target)
 
 ```bash
+# 1. Activate the virtual environment
+venv\Scripts\activate
 
-\# 1. Activate virtual environment
+# 2. Seed, run, and test in one step
+dbt build
 
-venv\\Scripts\\activate
-
-
-
-\# 2. Load raw data into DuckDB
-
-dbt seed
-
-
-
-\# 3. Run transformation models
-
-dbt run
-
-
-
-\# 4. Run data quality tests
-
-dbt test
-
-
-
-\# 5. Query results
-
-python query\_results.py
-
+# 3. Query results
+python query_results.py
 ```
 
+### On Snowflake
 
+```bash
+dbt debug --target snowflake   # check the connection (key-pair auth)
+dbt build --target snowflake   # seed, run, and test
+```
 
-\---
+Snowflake setup: warehouse `DBT_WH` (X-Small, 60-second auto-suspend), database `GL_RECON`,
+schema `DEV`, role `TRANSFORMER`, and service user `DBT_USER` with key-pair authentication.
+Connection details live in `~/.dbt/profiles.yml` and are not committed to this repo.
 
+---
 
+## Data Source
 
-\## Data Source
+- **Baker Hughes Company Form 10-K**, fiscal year ended December 31, 2023
+- Filed with SEC EDGAR on February 5, 2024
+- Source: https://www.sec.gov/Archives/edgar/data/0001701605/000170160524000033/bkr-20231231.htm
 
-\- \*\*Baker Hughes Company Form 10-K\*\* — Fiscal Year ended December 31, 2023
+Segment revenue and the other key metrics above come from the 10-K. The individual journal
+entries are synthetic: they were generated so their totals tie to the 10-K figures, which gives
+the reconciliation tests real numbers to check against.
 
-\- Filed with SEC EDGAR on February 5, 2024
+---
 
-\- Source: https://www.sec.gov/Archives/edgar/data/0001701605/000170160524000033/bkr-20231231.htm
+## Author
 
-
-
-\---
-
-
-
-\## Author
-
-\*\*Muhammad Hassan\*\*  
-
-GL Programmer → Analytics Engineering  
-
-Houston, TX  
-
-GitHub: \[@hassanm9301](https://github.com/hassanm9301)
-
-
-
+**Muhammad Hassan**
+GL Programmer → Analytics Engineering
+Houston, TX
+GitHub: [@hassanm9301](https://github.com/hassanm9301)

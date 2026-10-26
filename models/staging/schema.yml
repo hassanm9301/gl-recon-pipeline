@@ -6,22 +6,23 @@ models:
     columns:
       - name: journal_entry_id
         description: "Unique identifier for each journal entry"
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: entry_date
         description: "Date of journal entry"
-        tests:
+        data_tests:
           - not_null
       - name: segment
         description: "Business segment"
-        tests:
+        data_tests:
           - not_null
           - accepted_values:
-              values: ['OFSE', 'IET', 'Corporate']
+              arguments:
+                values: ['OFSE', 'IET', 'Corporate']
       - name: account_code
         description: "GL account code"
-        tests:
+        data_tests:
           - not_null
 
   - name: stg_chart_of_accounts
@@ -29,6 +30,6 @@ models:
     columns:
       - name: account_code
         description: "Unique account code"
-        tests:
+        data_tests:
           - unique
           - not_null
