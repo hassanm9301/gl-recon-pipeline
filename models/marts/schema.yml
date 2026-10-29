@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: fct_gl_entries
+    description: "Incremental GL fact table (delete+insert on journal_entry_id, 7-day lookback); source for all recon marts"
+    columns:
+      - name: gl_line_id
+        description: "Unique identifier for each GL line"
+        data_tests:
+          - unique
+          - not_null
+      - name: journal_entry_id
+        data_tests:
+          - not_null
+
   - name: mart_control_recon
     description: "GL vs Baker Hughes reported results by quarter and P&L line; TIED / OVER / UNDER within +/- $1M"
     columns:

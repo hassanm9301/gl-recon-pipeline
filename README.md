@@ -5,6 +5,7 @@
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
+[![dbt CI](https://github.com/hassanm9301/gl-recon-pipeline/actions/workflows/dbt-ci.yml/badge.svg)](https://github.com/hassanm9301/gl-recon-pipeline/actions/workflows/dbt-ci.yml)
 
 ## Overview
 
@@ -44,6 +45,9 @@ seeds (CSV)
 staging (views)
   stg_control_totals           stg_gl_entries                  stg_chart_of_accounts
         │                               │                               │
+        │                               ▼                               │
+        │                  fct_gl_entries (incremental)                 │
+        │                               │                               │
         └───────────────┬───────────────┴───────────────────────────────┘
                         ▼
 marts (tables)
@@ -61,9 +65,14 @@ marts (tables)
 | `stg_control_totals` | Staging | View | Reported Baker Hughes figures with source links |
 | `stg_gl_entries` | Staging | View | Typed GL lines (one debit and one credit line per journal entry) |
 | `stg_chart_of_accounts` | Staging | View | Accounts mapped to the control line they roll up to |
+| `fct_gl_entries` | Marts | Incremental | Central GL fact; reprocesses only recent entries (see below) |
 | `mart_control_recon` | Marts | Table | Reconciliation by quarter and P&L line with gap and status |
 | `fct_recon_exceptions` | Marts | Table | Duplicate, cut-off, wrong-account, and missing-entry exceptions |
 | `mart_gl_reconciliation` | Marts | Table | Debit/credit balance check by segment and account type |
+
+**Incremental load:** `fct_gl_entries` uses `delete+insert` on `journal_entry_id` with a 7-day
+lookback on `entry_date`. A re-posted journal entry replaces all of its lines together, and entries
+posted late into an already-loaded period are picked up. `dbt build --full-refresh` rebuilds it from scratch.
 
 **Tolerance:** a line is TIED when the GL is within ±$1M of the reported figure, which covers
 rounding in the earnings releases (reported in $ millions).
@@ -86,11 +95,19 @@ planted errors, and `fct_recon_exceptions` finds each one from the data alone:
 
 ## Data Tests
 
-10 tests: uniqueness and not-null on keys, accepted segment values (OFSE, IET, Chart, Corporate),
-and a recon test on `mart_control_recon.recon_status`. The recon test is set to **warn**, so the
+14 tests: uniqueness and not-null on keys, accepted segment values (OFSE, IET, Chart, Corporate),
+a double-entry check that every journal entry's debits equal its credits
+(`tests/assert_journal_entries_balance.sql`), and a recon test on `mart_control_recon.recon_status`. The recon test is set to **warn**, so the
 planted breaks surface as a warning instead of failing the build.
 
-Latest local run (DuckDB): **19 PASS, 1 WARN (expected), 0 ERROR.**
+Latest run (DuckDB): **24 PASS, 1 WARN (expected), 0 ERROR.**
+
+## Continuous Integration
+
+GitHub Actions (`.github/workflows/dbt-ci.yml`) runs on every push and pull request to `master`:
+it installs dbt, runs `dbt build` against a throwaway DuckDB database (`ci/profiles.yml`, no
+credentials needed), then runs the incremental model a second time to confirm the incremental
+path works. A failing model or test fails the check on the pull request.
 
 ---
 

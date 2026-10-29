@@ -1,0 +1,8 @@
+# Profile used only by GitHub Actions CI: a throwaway local DuckDB file, no credentials.
+gl_recon:
+  target: ci
+  outputs:
+    ci:
+      type: duckdb
+      path: gl_recon_ci.duckdb
+      threads: 4

@@ -7,7 +7,7 @@ with lines as (
         count(*) over (
             partition by g.account_code, g.entity_id, g.entry_date, g.debit_amount_usd, g.credit_amount_usd
         ) as same_posting_count
-    from {{ ref('stg_gl_entries') }} g
+    from {{ ref('fct_gl_entries') }} g
     join {{ ref('stg_chart_of_accounts') }} c
       on g.account_code = c.account_code
     where coalesce(c.control_line_label, '') <> ''
@@ -50,7 +50,7 @@ je_numbers as (
         journal_entry_id,
         substr(journal_entry_id, 4, 7)                    as je_period,
         cast(substr(journal_entry_id, 12, 4) as integer)  as je_number
-    from {{ ref('stg_gl_entries') }}
+    from {{ ref('fct_gl_entries') }}
 ),
 
 numbering_gaps as (

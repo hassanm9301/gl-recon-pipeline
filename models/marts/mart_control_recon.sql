@@ -6,7 +6,7 @@ with gl as (
         c.control_line_label                            as line_label,
         sum(g.credit_amount_usd - g.debit_amount_usd)   as gl_pl_impact_usd,
         count(distinct g.journal_entry_id)              as journal_entry_count
-    from {{ ref('stg_gl_entries') }} g
+    from {{ ref('fct_gl_entries') }} g
     join {{ ref('stg_chart_of_accounts') }} c
       on g.account_code = c.account_code
     where coalesce(c.control_line_label, '') <> ''

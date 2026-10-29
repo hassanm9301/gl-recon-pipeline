@@ -1,5 +1,5 @@
 with gl as (
-    select * from {{ ref('stg_gl_entries') }}
+    select * from {{ ref('fct_gl_entries') }}
 ),
 
 coa as (
