@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mart_control_recon
+    description: "GL vs Baker Hughes reported results by quarter and P&L line; TIED / OVER / UNDER within +/- $1M"
+    columns:
+      - name: recon_status
+        description: "TIED when |gap| <= $1M, otherwise OVER or UNDER"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['TIED']
+              config:
+                severity: warn
+
+  - name: fct_recon_exceptions
+    description: "Journal entries behind each break: duplicate_entry, cutoff_error, wrong_account, missing_entry"

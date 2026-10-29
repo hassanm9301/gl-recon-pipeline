@@ -1,37 +1,31 @@
-account_code,account_name,account_type,category,segment
-1000,Cash and Cash Equivalents,Asset,Current Asset,Corporate
-1100,Accounts Receivable,Asset,Current Asset,Corporate
-1200,Inventories,Asset,Current Asset,Corporate
-1300,Prepaid Expenses,Asset,Current Asset,Corporate
-1500,Property Plant and Equipment,Asset,Non-Current Asset,Corporate
-1600,Goodwill,Asset,Non-Current Asset,Corporate
-1700,Intangible Assets,Asset,Non-Current Asset,Corporate
-2000,Accounts Payable,Liability,Current Liability,Corporate
-2100,Accrued Expenses,Liability,Current Liability,Corporate
-2200,Short-Term Debt,Liability,Current Liability,Corporate
-2500,Long-Term Debt,Liability,Non-Current Liability,Corporate
-2600,Deferred Tax Liability,Liability,Non-Current Liability,Corporate
-3000,Common Stock,Equity,Equity,Corporate
-3100,Retained Earnings,Equity,Equity,Corporate
-4000,OFSE Revenue - Well Construction,Revenue,Revenue,OFSE
-4010,OFSE Revenue - Completions and Intervention,Revenue,Revenue,OFSE
-4020,OFSE Revenue - Production Solutions,Revenue,Revenue,OFSE
-4030,OFSE Revenue - Subsea and Surface,Revenue,Revenue,OFSE
-4100,IET Revenue - Gas Technology Equipment,Revenue,Revenue,IET
-4110,IET Revenue - Gas Technology Services,Revenue,Revenue,IET
-4120,IET Revenue - Industrial Products,Revenue,Revenue,IET
-4130,IET Revenue - Industrial Solutions,Revenue,Revenue,IET
-4140,IET Revenue - Climate Technology Solutions,Revenue,Revenue,IET
-5000,OFSE Cost of Goods Sold,Expense,COGS,OFSE
-5100,IET Cost of Goods Sold,Expense,COGS,IET
-6000,OFSE Research and Development,Expense,Operating Expense,OFSE
-6010,IET Research and Development,Expense,Operating Expense,IET
-6100,Selling General and Administrative - OFSE,Expense,Operating Expense,OFSE
-6110,Selling General and Administrative - IET,Expense,Operating Expense,IET
-6200,Corporate SGA Expense,Expense,Operating Expense,Corporate
-6300,Restructuring and Impairment,Expense,Operating Expense,Corporate
-6400,Depreciation and Amortization - OFSE,Expense,Operating Expense,OFSE
-6410,Depreciation and Amortization - IET,Expense,Operating Expense,IET
-7000,Interest Expense,Expense,Non-Operating,Corporate
-7100,Other Non-Operating Income,Revenue,Non-Operating,Corporate
-8000,Income Tax Expense,Expense,Tax,Corporate
+account_code,account_name,account_type,category,segment,control_line_label
+1000,Cash and Cash Equivalents,Asset,Current Asset,Corporate,
+1100,Accounts Receivable,Asset,Current Asset,Corporate,
+2000,Accounts Payable,Liability,Current Liability,Corporate,
+2100,Accrued Expenses,Liability,Current Liability,Corporate,
+2300,Income Taxes Payable,Liability,Current Liability,Corporate,
+4000,Revenue - Well Construction,Revenue,Revenue,OFSE,Well Construction
+4010,"Revenue - Completions, Intervention & Measurements",Revenue,Revenue,OFSE,"Completions, Intervention & Measurements"
+4020,Revenue - Production Solutions,Revenue,Revenue,OFSE,Production Solutions
+4030,Revenue - Subsea & Surface Pressure Systems,Revenue,Revenue,OFSE,Subsea & Surface Pressure Systems
+4100,Revenue - Gas Technology Equipment,Revenue,Revenue,IET,Gas Technology Equipment
+4110,Revenue - Gas Technology Services,Revenue,Revenue,IET,Gas Technology Services
+4120,Revenue - Industrial Products,Revenue,Revenue,IET,Industrial Products
+4130,Revenue - Industrial Solutions,Revenue,Revenue,IET,Industrial Solutions
+4140,Revenue - Climate Technology Solutions,Revenue,Revenue,IET,Climate Technology Solutions
+4150,Revenue - Condition Monitoring (pre-2023-Q4),Revenue,Revenue,IET,Condition Monitoring
+4160,Revenue - Inspection (pre-2023-Q4),Revenue,Revenue,IET,Inspection
+4170,"Revenue - Pumps, Valves & Gears (pre-2023-Q4)",Revenue,Revenue,IET,"Pumps, Valves & Gears"
+4180,Revenue - PSI & Controls (pre-2023-Q4),Revenue,Revenue,IET,PSI & Controls
+4200,Revenue - Chart Original Equipment,Revenue,Revenue,Chart,Original Equipment
+4210,Revenue - Chart Aftermarket,Revenue,Revenue,Chart,Aftermarket
+5000,Cost of Revenue,Expense,COGS,Corporate,Cost of revenue
+6000,Research and Development,Expense,Operating Expense,Corporate,Research and development
+6100,"Selling, General and Administrative",Expense,Operating Expense,Corporate,"Selling, general and administrative"
+6300,"Restructuring, Impairment and Other",Expense,Operating Expense,Corporate,"Restructuring, impairment and other"
+6310,Restructuring,Expense,Operating Expense,Corporate,Restructuring
+6400,Amortization of Acquired Intangible Assets,Expense,Operating Expense,Corporate,Amortization of acquired intangible assets
+7000,"Interest Expense, Net",Expense,Non-Operating,Corporate,"Interest expense, net"
+7100,"Other Non-Operating Income (Loss), Net",Revenue,Non-Operating,Corporate,"Other non-operating income (loss), net"
+7110,"Other (Income) Expense, Net",Expense,Non-Operating,Corporate,"Other (income) expense, net"
+8000,Provision (Benefit) for Income Taxes,Expense,Tax,Corporate,Provision (benefit) for income taxes

@@ -8,7 +8,8 @@ cleaned as (
         account_name,
         account_type,
         category,
-        segment
+        segment,
+        control_line_label
     from source
 )
 

@@ -4,7 +4,9 @@ with source as (
 
 cleaned as (
     select
+        gl_line_id,
         journal_entry_id,
+        line_number,
         cast(entry_date as date)          as entry_date,
         period,
         account_code,
