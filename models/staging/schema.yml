@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_gl_entries
-    description: "Cleaned and typed GL journal entries from Baker Hughes 2023 10-K"
+    description: "Cleaned and typed synthetic GL journal entries modeled on Baker Hughes' FY2023 10-K"
     columns:
       - name: journal_entry_id
         description: "Unique identifier for each journal entry"

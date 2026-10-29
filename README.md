@@ -151,9 +151,11 @@ Connection details live in `~/.dbt/profiles.yml` and are not committed to this r
 - Filed with SEC EDGAR on February 5, 2024
 - Source: https://www.sec.gov/Archives/edgar/data/0001701605/000170160524000033/bkr-20231231.htm
 
-Segment revenue and the other key metrics above come from the 10-K. The individual journal
-entries are synthetic: they were generated so their totals tie to the 10-K figures, which gives
-the reconciliation tests real numbers to check against.
+Segment revenue and the other key metrics above come from the 10-K. The 81 journal entries in
+`seeds/gl_entries.csv` are synthetic and do **not** yet tie to those figures (they sum to about
+$20.5B of revenue against $25.5B reported). A rebuild is in progress that generates synthetic
+detail tying to Baker Hughes' reported results for 15 quarters (Q1 2023 – Q3 2026), with planted
+breaks for the reconciliation models to catch.
 
 ---
 
