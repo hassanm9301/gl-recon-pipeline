@@ -17,7 +17,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dbt
-        run: pip install "dbt-core==1.12.6" dbt-duckdb
+        run: pip install "dbt-core==1.12.6" "dbt-duckdb==1.11.0"
 
       - name: Build and test (seeds, models, tests) on DuckDB
         run: dbt build --profiles-dir ci --target ci
