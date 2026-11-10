@@ -1,15 +1,24 @@
 -- Points each OVER/UNDER line in mart_control_recon to the journal entries that cause it.
+-- Exceptions are classified from the data structure only (dates, accounts, amounts);
+-- the free-text description is never parsed.
 with lines as (
     select
         g.*,
         c.control_line_label,
         g.debit_amount_usd + g.credit_amount_usd as amount_usd,
+        -- quarter the transaction date falls in, in the same format as period (e.g. 2025-Q4)
+        cast(g.fiscal_year as varchar) || '-Q' || cast(g.fiscal_quarter as varchar) as date_period,
+        -- revenue posted by an entity that is not expected to book that revenue account
+        case when c.category = 'Revenue' and m.account_code is null then 1 else 0 end as unexpected_account,
         count(*) over (
             partition by g.account_code, g.entity_id, g.entry_date, g.debit_amount_usd, g.credit_amount_usd
         ) as same_posting_count
     from {{ ref('fct_gl_entries') }} g
     join {{ ref('stg_chart_of_accounts') }} c
       on g.account_code = c.account_code
+    left join {{ ref('stg_entity_revenue_accounts') }} m
+      on m.entity_id    = g.entity_id
+     and m.account_code = g.account_code
     where coalesce(c.control_line_label, '') <> ''
 ),
 
@@ -22,9 +31,9 @@ breaks as (
 matched as (
     select
         case
-            when split_part(l.description, ' - ', 1) <> l.control_line_label then 'wrong_account'
-            when substr(split_part(l.description, ' - ', 2), 1, 7) <> l.period then 'cutoff_error'
-            when l.same_posting_count > 1                                     then 'duplicate_entry'
+            when l.date_period <> l.period   then 'cutoff_error'     -- dated in one quarter, posted to another
+            when l.unexpected_account = 1    then 'wrong_account'    -- entity/account pair outside the mapping
+            when l.same_posting_count > 1    then 'duplicate_entry'  -- same account, entity, date and amount twice
             else 'unexplained'
         end                     as exception_type,
         b.fiscal_period,

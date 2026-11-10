@@ -1,6 +1,7 @@
 """Generate synthetic GL detail that ties to seeds/control_totals.csv.
 
-Writes seeds/chart_of_accounts.csv, seeds/entities.csv and seeds/gl_entries.csv.
+Writes seeds/chart_of_accounts.csv, seeds/entities.csv, seeds/entity_revenue_accounts.csv
+and seeds/gl_entries.csv.
 - Every P&L line in control_totals (pl_sign != 0) gets synthetic double-entry journal
   entries dated inside the real quarter, summing exactly to the reported amount.
 - Four planted breaks are applied afterwards (listed in PLANTED_BREAKS and the README).
@@ -12,7 +13,8 @@ from pathlib import Path
 SEED = 42
 ROOT = Path(__file__).resolve().parent.parent
 SEEDS = ROOT / "seeds"
-rng = random.Random(SEED)
+rng = random.Random(SEED)              # amounts, entities
+date_rng = random.Random(SEED + 1)     # posting dates (kept separate so date logic never shifts amounts)
 
 # ---- reference data ---------------------------------------------------------
 ENTITIES = [
@@ -103,10 +105,11 @@ def split(total, n):
     return parts
 
 def weekday_in_quarter(period_end):
+    """Random weekday inside the quarter that ends on period_end."""
     end = dt.date.fromisoformat(period_end)
-    start = (end.replace(day=1) - dt.timedelta(days=62)).replace(day=1)
+    start = dt.date(end.year, end.month - 2, 1)
     while True:
-        d = start + dt.timedelta(days=rng.randint(0, (end - start).days))
+        d = start + dt.timedelta(days=date_rng.randint(0, (end - start).days))
         if d.weekday() < 5:
             return d
 
@@ -146,9 +149,9 @@ dup["je"] = f"JE-2024-Q2-{seq['2024-Q2']:04d}"
 dup["desc"] += " (duplicate)"
 entries.append(dup)
 PLANTED_BREAKS.append(("duplicate_entry", dup["je"], "2024-Q2 Well Construction OVER by $" + f"{dup['amount']:,}"))
-# 2. Cut-off error: Q4 entry booked in the next quarter -> 2025-Q4 UNDER, 2026-Q1 OVER
+# 2. Cut-off error: transaction dated Dec 31 but posted to the next quarter -> 2025-Q4 UNDER, 2026-Q1 OVER
 cut = biggest("2025-Q4", "Gas Technology Equipment")
-cut["date"], cut["period"] = dt.date(2026, 1, 2), "2026-Q1"
+cut["date"], cut["period"] = dt.date(2025, 12, 31), "2026-Q1"
 PLANTED_BREAKS.append(("cutoff_error", cut["je"], "2025-Q4 Gas Technology Equipment UNDER / 2026-Q1 OVER by $" + f"{cut['amount']:,}"))
 # 3. Wrong account: Production Solutions revenue posted to Subsea account
 wrong = biggest("2024-Q3", "Production Solutions")
@@ -164,6 +167,11 @@ with open(SEEDS / "entities.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f); w.writerow(["entity_id", "entity_name", "entity_type", "segment", "region", "country"]); w.writerows(ENTITIES)
 with open(SEEDS / "chart_of_accounts.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f); w.writerow(["account_code", "account_name", "account_type", "category", "segment", "control_line_label"]); w.writerows(COA)
+
+# which entities are expected to book each revenue account (used to catch wrong-account postings)
+with open(SEEDS / "entity_revenue_accounts.csv", "w", newline="", encoding="utf-8") as f:
+    w = csv.writer(f); w.writerow(["entity_id", "account_code"])
+    w.writerows(sorted({(ent, ACCT[label][0]) for label, ents in LINE_ENTITIES.items() for ent in ents}))
 
 names = {r[0]: r[1] for r in COA}
 entries.sort(key=lambda e: (e["period"], e["je"]))

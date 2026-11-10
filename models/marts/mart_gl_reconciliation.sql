@@ -39,7 +39,7 @@ reconciled as (
         sum(debit_amount_usd)               as total_debits,
         sum(credit_amount_usd)              as total_credits,
         sum(net_amount_usd)                 as net_amount,
-        count(journal_entry_id)             as entry_count,
+        count(distinct journal_entry_id)    as entry_count,
         sum(debit_amount_usd) - sum(credit_amount_usd) as balance_check
     from joined
     group by
@@ -51,4 +51,4 @@ reconciled as (
         category
 )
 
-select * from reconciled
+select * from reconciled

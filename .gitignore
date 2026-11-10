@@ -3,4 +3,5 @@ target/
 dbt_packages/
 logs/
 *.duckdb
-*.zip.user.yml
+*.zip
+.user.yml

@@ -40,10 +40,12 @@ over the period, and the data keeps each quarter exactly as reported:
 ```
 seeds (CSV)
   control_totals (311, real)   gl_entries (14,980, synthetic)   chart_of_accounts (30)   entities (10)
+                                                                entity_revenue_accounts (18)
         │                               │                               │
         ▼                               ▼                               ▼
 staging (views)
   stg_control_totals           stg_gl_entries                  stg_chart_of_accounts
+                                                               stg_entity_revenue_accounts
         │                               │                               │
         │                               ▼                               │
         │                  fct_gl_entries (incremental)                 │
@@ -65,6 +67,7 @@ marts (tables)
 | `stg_control_totals` | Staging | View | Reported Baker Hughes figures with source links |
 | `stg_gl_entries` | Staging | View | Typed GL lines (one debit and one credit line per journal entry) |
 | `stg_chart_of_accounts` | Staging | View | Accounts mapped to the control line they roll up to |
+| `stg_entity_revenue_accounts` | Staging | View | Which entities are expected to book each revenue account |
 | `fct_gl_entries` | Marts | Incremental | Central GL fact; reprocesses only recent entries (see below) |
 | `mart_control_recon` | Marts | Table | Reconciliation by quarter and P&L line with gap and status |
 | `fct_recon_exceptions` | Marts | Table | Duplicate, cut-off, wrong-account, and missing-entry exceptions |
@@ -86,21 +89,31 @@ planted errors, and `fct_recon_exceptions` finds each one from the data alone:
 
 | Planted break | Journal entry | How it's detected | Effect |
 |---|---|---|---|
-| Duplicate entry | JE-2024-Q2-0483 (copy of 0018) | Same account, entity, date, and amount posted twice | 2024-Q2 Well Construction OVER $46.8M |
-| Cut-off error | JE-2025-Q4-0185 | Q4 entry booked in the next quarter | 2025-Q4 Gas Technology Equipment UNDER / 2026-Q1 OVER $78.7M |
-| Wrong account | JE-2024-Q3-0118 | Production Solutions revenue posted to the Subsea account | 2024-Q3 Production Solutions UNDER / Subsea OVER $45.7M |
-| Missing entry | JE-2023-Q2-0465 | Gap in journal entry numbering | 2023-Q2 SG&A UNDER $42.4M |
+| Duplicate entry | JE-2024-Q2-0483 | Same account, entity, date, and amount posted twice | 2024-Q2 Well Construction OVER $46.5M |
+| Cut-off error | JE-2025-Q4-0200 | Transaction dated 2025-12-31 but posted to 2026-Q1: the date's quarter doesn't match the posting period | 2025-Q4 Gas Technology Equipment UNDER / 2026-Q1 OVER $80.0M |
+| Wrong account | JE-2024-Q3-0089 | BKR-OFSE-NA posted revenue to the Subsea account, which only BKR-OFSE-SUBSEA books (`entity_revenue_accounts`) | 2024-Q3 Production Solutions UNDER / Subsea OVER $41.6M |
+| Missing entry | JE-2023-Q2-0472 | Gap in journal entry numbering | 2023-Q2 SG&A UNDER $36.7M |
+
+Detection uses only the structure of the data (posting period vs. transaction date, the
+entity-to-account mapping, matching amounts, and JE numbering). The free-text `description`
+is never parsed, so the same logic would work on a real ledger.
 
 ---
 
 ## Data Tests
 
-14 tests: uniqueness and not-null on keys, accepted segment values (OFSE, IET, Chart, Corporate),
+18 tests: uniqueness and not-null on keys, accepted segment values (OFSE, IET, Chart, Corporate),
+referential integrity on the entity-to-account mapping,
 a double-entry check that every journal entry's debits equal its credits
 (`tests/assert_journal_entries_balance.sql`), and a recon test on `mart_control_recon.recon_status`. The recon test is set to **warn**, so the
 planted breaks surface as a warning instead of failing the build.
 
-Latest run (DuckDB): **24 PASS, 1 WARN (expected), 0 ERROR.**
+Latest run, same result on both targets: **30 PASS, 1 WARN (expected), 0 ERROR.**
+
+| Target | Date | Result |
+|---|---|---|
+| DuckDB (local + CI) | 2026-11-09 | 30 PASS, 1 WARN, 0 ERROR |
+| Snowflake (`DEV`) | TODO | TODO |
 
 ## Continuous Integration
 
@@ -131,6 +144,42 @@ dbt build --target snowflake   # seed, run, and test
 Snowflake setup: warehouse `DBT_WH` (X-Small, 60-second auto-suspend), database `GL_RECON`,
 schema `DEV`, role `TRANSFORMER`, and service user `DBT_USER` with key-pair authentication.
 Connection details live in `~/.dbt/profiles.yml` and are not committed to this repo.
+
+---
+
+## Snowflake
+
+The full project (5 seeds, 8 models, 18 tests) runs on Snowflake with no SQL changes; dbt's
+cross-database macros (`dbt.dateadd`) handle the dialect differences with DuckDB.
+
+**Dev and prod with zero-copy cloning.** `GL_RECON.DEV` is where dbt builds. Prod is a
+zero-copy clone of it, which is created in seconds and uses no extra storage until the two
+copies diverge:
+
+```sql
+create or replace database GL_RECON_PROD clone GL_RECON;
+```
+
+Tested on 2026-11-09: both databases returned 235 rows in `mart_control_recon`. Deleting the
+229 TIED rows from the clone left the original at 235, which confirms the copies are independent.
+
+Limitation: the clone's tables are independent copies, but its `stg_` views still read from
+`GL_RECON.DEV`, because dbt writes fully qualified names into view definitions. A real prod
+environment would be built by dbt with its own `prod` target; the clone is best used as a
+snapshot or a quick test environment.
+
+**Cost.** TODO: credits used for the full project, from Admin → Cost Management
+(X-Small warehouse, 60-second auto-suspend).
+
+**Screenshots**
+
+| | |
+|---|---|
+| ![Query history](docs/snowflake_query_history.png) | ![GL_RECON objects](docs/snowflake_objects.png) |
+| dbt build in Snowflake query history | Seeds, views and tables in `GL_RECON.DEV` |
+
+![Recon mart](docs/snowflake_recon_mart.png)
+`mart_control_recon` breaks in Snowflake: the six OVER/UNDER lines from the planted errors.
 
 ---
 
