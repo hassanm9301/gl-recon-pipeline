@@ -168,8 +168,16 @@ Limitation: the clone's tables are independent copies, but its `stg_` views stil
 environment would be built by dbt with its own `prod` target; the clone is best used as a
 snapshot or a quick test environment.
 
-**Cost.** TODO: credits used for the full project, from Admin → Cost Management
-(X-Small warehouse, 60-second auto-suspend).
+**Cost.** The whole project used **0.35 Snowflake credits** from 2026-10-20 to 2026-11-09: every
+dbt run, test and ad-hoc query (`snowflake.account_usage.warehouse_metering_history`).
+
+| Warehouse | Compute | Cloud services | Total |
+|---|---|---|---|
+| `DBT_WH` (X-Small, 60-second auto-suspend) | 0.3251 | 0.0207 | 0.3458 |
+| Cloud services only (clone, metadata) | 0 | 0.0034 | 0.0034 |
+
+0.3251 compute credits is about 20 minutes of X-Small run time over three weeks; auto-suspend
+keeps the warehouse off between runs.
 
 **Screenshots**
 
